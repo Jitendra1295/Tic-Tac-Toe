@@ -3,7 +3,11 @@
 }
 
 .board-container {
-  margin: 30%;
+  position: fixed;
+  top: 20%;
+  left: 40%;
+  right: 40%;
+  bottom: 0;
 }
 
 .board-row {
@@ -16,4 +20,33 @@
   margin: 20px;
   color: green;
   font-size: 28px
+}
+
+/* Default button style */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  color: #007bff;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Hover state */
+.button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Active state */
+.button:active {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  color: #fff;
 }

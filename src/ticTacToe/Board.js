@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import Square from './Square';
+import { TicTacToeState } from "../context/Context";
 
 const Board = () => {
     const [state, setState] = useState(Array(9).fill(null))
-    const [isXTurn, setIsXTurn] = useState(true)
-    console.log(state);
+    const [isXTurn, setIsXTurn] = useState(true);
+    const [isMatchedWin, setIsMatchedWin] = useState(false);
+    const { setWinPosition, winPosition } = TicTacToeState();
+    console.log("setWinPosition", setWinPosition, winPosition);
     console.log(state);
     const handleOnclick = (index) => {
         const copyState = [...state];
-        if (copyState[index]) return;
+        if (copyState[index] || isMatchedWin) return;
         copyState[index] = isXTurn ? "X" : "O";
         setIsXTurn(!isXTurn)
         setState(copyState)
@@ -34,16 +37,24 @@ const Board = () => {
         for (let logic of winningPositions) {
             const [a, b, c] = logic;
             if (state[a] !== null && state[a] === state[b] && state[a] === state[c]) {
+                if (!winPosition.length) { // Check if a winner has already been found
+                    setWinPosition(logic);
+                }
+                if (!isMatchedWin) { // Check if a winner has already been found
+                    setIsMatchedWin(true)
+                }
                 return state[a];
             }
         }
         if (state.every(square => square !== null)) {
-            return 'tie'; // It's a tie
+            return 'Tie'; // It's a tie
         }
         return false;
     }
 
     const handleReset = () => {
+        setWinPosition("");
+        setIsMatchedWin(false)
         setState(Array(9).fill(null));
     }
 
@@ -54,23 +65,23 @@ const Board = () => {
             {
                 isWinner &&
                 <div className='labelText'>
-                    <span style={{ fontWeight: 600, fontSize: 30 }}>{isWinner} </span> {isWinner === "tie" ? "matched" : "won the game"} <button onClick={() => handleReset()}>Play Again</button>
+                    <span style={{ fontWeight: 600, fontSize: 30 }}> " {isWinner} " </span> {isWinner === "Tie" ? "matched" : "won the game"} <button className='button' onClick={() => handleReset()}>Play Again</button>
                 </div>
             }
             <div className='board-row'>
-                <Square value={state[0]} onClick={() => { handleOnclick(0) }} />
-                <Square value={state[1]} onClick={() => { handleOnclick(1) }} />
-                <Square value={state[2]} onClick={() => { handleOnclick(2) }} />
+                <Square value={state[0]} index={0} onClick={() => { handleOnclick(0) }} />
+                <Square value={state[1]} index={1} onClick={() => { handleOnclick(1) }} />
+                <Square value={state[2]} index={2} onClick={() => { handleOnclick(2) }} />
             </div>
             <div className='board-row'>
-                <Square value={state[3]} onClick={() => { handleOnclick(3) }} />
-                <Square value={state[4]} onClick={() => { handleOnclick(4) }} />
-                <Square value={state[5]} onClick={() => { handleOnclick(5) }} />
+                <Square value={state[3]} index={3} onClick={() => { handleOnclick(3) }} />
+                <Square value={state[4]} index={4} onClick={() => { handleOnclick(4) }} />
+                <Square value={state[5]} index={5} onClick={() => { handleOnclick(5) }} />
             </div>
             <div className='board-row'>
-                <Square value={state[6]} onClick={() => { handleOnclick(6) }} />
-                <Square value={state[7]} onClick={() => { handleOnclick(7) }} />
-                <Square value={state[8]} onClick={() => { handleOnclick(8) }} />
+                <Square value={state[6]} index={6} onClick={() => { handleOnclick(6) }} />
+                <Square value={state[7]} index={7} onClick={() => { handleOnclick(7) }} />
+                <Square value={state[8]} index={8} onClick={() => { handleOnclick(8) }} />
             </div>
 
         </div>
