@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+}
+
+.board-container {
+  margin: 30%;
+}
+
+.board-row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.labelText {
+  margin: 20px;
+  color: green;
+  font-size: 28px
+}
