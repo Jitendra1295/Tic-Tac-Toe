@@ -37,6 +37,9 @@ const Board = () => {
                 return state[a];
             }
         }
+        if (state.every(square => square !== null)) {
+            return 'tie'; // It's a tie
+        }
         return false;
     }
 
@@ -51,7 +54,7 @@ const Board = () => {
             {
                 isWinner &&
                 <div className='labelText'>
-                    <span style={{ fontWeight: 600, fontSize: 30 }}>{isWinner} </span> won the game  <button onClick={() => handleReset()}>Play Again</button>
+                    <span style={{ fontWeight: 600, fontSize: 30 }}>{isWinner} </span> {isWinner === "tie" ? "matched" : "won the game"} <button onClick={() => handleReset()}>Play Again</button>
                 </div>
             }
             <div className='board-row'>
